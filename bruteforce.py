@@ -1,8 +1,8 @@
 import csv
 from itertools import combinations
 import time
-from memory_profiler import profile
-bruteforce_data_path = "data\\dataset_bruteforce.csv"
+import sys
+bruteforce_data_path = sys.argv[1]
 start_time = time.time()
 
 
@@ -43,7 +43,7 @@ def bruteforce_under_500(actions: list) -> list:
 def bruteforce_sum(combination):
     sum = int(0)
     for action in combination:
-        sum = sum + int(action[1])
+        sum = sum + float(action[1])
 
     return sum
 

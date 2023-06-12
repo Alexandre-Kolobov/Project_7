@@ -1,9 +1,8 @@
 import csv
-from itertools import combinations
 import time
-from memory_profiler import profile
-# bruteforce_data_path = "data\\dataset_bruteforce.csv"
-bruteforce_data_path = "data\\dataset1_Python+P7.csv"
+import sys
+
+data_path = sys.argv[1]
 start_time = time.time()
 
 class Action: 
@@ -15,19 +14,19 @@ class Action:
         self.rapport = self.benefit_net / self.price
 
     def __repr__ (self):
-        return f"[{self.name};{self.price};{self.benefit_net};{self.rapport}]"
+        return f"[{self.name};{self.price};{self.benefit_percent}]"
 
-def load_actions(bruteforce_data_path):
+def load_actions(data_path):
     """Charge les actions"""
     actions = []
 
-    with open(bruteforce_data_path, "r") as csvfile:
+    with open(data_path, "r") as csvfile:
         csvreader = csv.reader(csvfile)
 
         next(csvreader)  # Pour eviter l'entete
         for action in csvreader:
-            actions.append(Action(action[0], action[1], action[2]))
-            print(actions)
+            if float(action[1]) != 0:
+                actions.append(Action(action[0], action[1], action[2]))
     return actions
 
 def calculation_optimized(actions, limit):
@@ -46,7 +45,7 @@ def calculation_optimized(actions, limit):
             sum -= action.price
 
     print("==================================================================")
-    print(f"Voici la combinaison la plus rentable: {opitmized_list}")
+    print(f"Voici les actions à acheter: {opitmized_list} \n")
     print(f"Somme investie: {sum}")
     print(f"Benefice: {total_benefit}")
     print(f"Temps d'execution: {time.time() - start_time}")  # renvoi le temps en s depuis epoch 1970 à 00:00:00
@@ -54,8 +53,9 @@ def calculation_optimized(actions, limit):
 
 
 
+def main():
+    actions = load_actions(data_path)
+    actions.sort(key= lambda a: a.rapport, reverse=True)
+    calculation_optimized(actions, 500)
 
-actions = load_actions(bruteforce_data_path)
-actions.sort(key= lambda a: a.rapport, reverse=True)
-calculation_optimized(actions, 500)
-
+main()
