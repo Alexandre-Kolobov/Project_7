@@ -1,6 +1,9 @@
 import csv
 from itertools import combinations
+import time
+from memory_profiler import profile
 bruteforce_data_path = "data\\dataset_bruteforce.csv"
+start_time = time.time()
 
 
 def load_actions(bruteforce_data_path):
@@ -52,11 +55,16 @@ def bruteforce_benefit(combination):
 
     return benefit
 
+# @profile
+def main():
+    actions = load_actions(bruteforce_data_path)
+    combinations_under_500 = bruteforce_under_500(actions)
+    combinations_under_500.sort(key=lambda combination: bruteforce_benefit(combination), reverse=True)
+    print("==================================================================")
+    print(f"Voici la combinaison la plus rentable: {combinations_under_500[0]}")
+    print(f"Somme investie: {bruteforce_sum(combinations_under_500[0])}")
+    print(f"Benefice: {bruteforce_benefit(combinations_under_500[0])}")
+    print(f"Temps d'execution: {time.time() - start_time}")  # renvoi le temps en s depuis epoch 1970 à 00:00:00
+    print("==================================================================")
 
-actions = load_actions(bruteforce_data_path)
-combinations_under_500 = bruteforce_under_500(actions)
-combinations_under_500.sort(key=lambda combination: bruteforce_benefit(combination), reverse=True)
-
-print(f"Voici la combinaison la plus rentable: {combinations_under_500[0]}")
-print(f"Somme investie: {bruteforce_sum(combinations_under_500[0])}")
-print(f"Benefice: {bruteforce_benefit(combinations_under_500[0])}")
+main()
