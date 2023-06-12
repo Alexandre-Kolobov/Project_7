@@ -5,16 +5,18 @@ import sys
 data_path = sys.argv[1]
 start_time = time.time()
 
-class Action: 
+
+class Action:
     def __init__(self, name, price, benefit_percent):
-        self.name = name      
+        self.name = name
         self.price = float(price)
         self.benefit_percent = float(benefit_percent)
         self.benefit_net = float(self.benefit_percent)*0.01*float(price)
         self.rapport = self.benefit_net / self.price
 
-    def __repr__ (self):
+    def __repr__(self):
         return f"[{self.name};{self.price};{self.benefit_percent}]"
+
 
 def load_actions(data_path):
     """Charge les actions"""
@@ -29,18 +31,17 @@ def load_actions(data_path):
                 actions.append(Action(action[0], action[1], action[2]))
     return actions
 
+
 def calculation_optimized(actions, limit):
     sum = 0
     total_benefit = 0
     opitmized_list = []
     for action in actions:
-        
         sum += action.price
 
         if sum <= limit:
             opitmized_list.append(action)
             total_benefit += action.benefit_net
-        
         elif sum > limit:  # Pour prendre combler l'ecart entre limit possible avec les meilleurs solutions
             sum -= action.price
 
@@ -52,10 +53,10 @@ def calculation_optimized(actions, limit):
     print("==================================================================")
 
 
-
 def main():
     actions = load_actions(data_path)
-    actions.sort(key= lambda a: a.rapport, reverse=True)
+    actions.sort(key=lambda a: a.rapport, reverse=True)
     calculation_optimized(actions, 500)
+
 
 main()

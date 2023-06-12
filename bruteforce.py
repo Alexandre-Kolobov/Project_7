@@ -55,7 +55,7 @@ def bruteforce_benefit(combination):
 
     return benefit
 
-# @profile
+
 def main():
     actions = load_actions(bruteforce_data_path)
     combinations_under_500 = bruteforce_under_500(actions)
@@ -66,5 +66,6 @@ def main():
     print(f"Benefice: {bruteforce_benefit(combinations_under_500[0])}")
     print(f"Temps d'execution: {time.time() - start_time}")  # renvoi le temps en s depuis epoch 1970 à 00:00:00
     print("==================================================================")
+
 
 main()
