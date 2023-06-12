@@ -13,7 +13,7 @@ How to run these programs:
 	3)Now you are ready to execute the program.
 	
 How to use it:
-	There are two programs bruteforce.py and optimized.py.
+	There are two programs bruteforce.py and optimized.py:
 		1) bruteforce.py tests all solution and find the best one. It works with csv files.
 			It is precise but execution time is long.
 			To launch in your command line "python bruteforce.py /YOUR_CSV_FILE"
