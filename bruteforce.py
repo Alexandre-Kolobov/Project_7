@@ -21,11 +21,11 @@ def load_actions(bruteforce_data_path):
 def bruteforce_under_500(actions: list) -> list:
     """Recherche des tous les possibilités pour un montant max de 500 euros"""
     combinations_under_500 = []
-    n = 1  # Pour ne pas prendre l'entete du fichier csv
+    i = 1  # Pour ne pas prendre l'entete du fichier csv
 
-    while n <= len(actions):
+    while i <= len(actions):
         # possibilité d'avoir de 1 à 20 actions dans une combinaison
-        actions_combinations = combinations(actions[1:], n)
+        actions_combinations = combinations(actions[1:], i)
 
         # verification de la somme pour chaque combinaison.
         # Il ne faut pas depasser 500 euros
@@ -35,7 +35,7 @@ def bruteforce_under_500(actions: list) -> list:
             if sum <= 500:
                 # alimentation d'une liste avec les combinaisons <= à 500 euros
                 combinations_under_500.append(combination)
-        n += 1
+        i += 1
 
     return combinations_under_500
 
