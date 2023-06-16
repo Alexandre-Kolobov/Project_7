@@ -25,24 +25,27 @@ def bruteforce_under_500(actions: list) -> list:
 
     while i <= len(actions):
         # possibilité d'avoir de 1 à 20 actions dans une combinaison
-        actions_combinations = combinations(actions[1:], i)
+        if i == 1:
+            actions_combinations = list(combinations(actions[1:], i))  # complexité 2^n
+        else:
+            actions_combinations = actions_combinations + list(combinations(actions[1:], i))
 
-        # verification de la somme pour chaque combinaison.
-        # Il ne faut pas depasser 500 euros
-        for combination in actions_combinations:
-            sum = bruteforce_sum(combination)
-
-            if sum <= 500:
-                # alimentation d'une liste avec les combinaisons <= à 500 euros
-                combinations_under_500.append(combination)
         i += 1
+
+    # verification de la somme pour chaque combinaison.
+    # Il ne faut pas depasser 500 euros
+    for combination in actions_combinations:  # complexité 2^n
+        sum = bruteforce_sum(combination)
+        if sum <= 500:
+            # alimentation d'une liste avec les combinaisons <= à 500 euros
+            combinations_under_500.append(combination)
 
     return combinations_under_500
 
 
 def bruteforce_sum(combination):
     sum = int(0)
-    for action in combination:
+    for action in combination:  # complexité n
         sum = sum + float(action[1])
 
     return sum

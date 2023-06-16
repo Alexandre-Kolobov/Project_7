@@ -24,7 +24,7 @@ def load_actions(data_path):
 
     with open(data_path, "r") as csvfile:
         csvreader = csv.reader(csvfile)
-
+        
         next(csvreader)  # Pour eviter l'entete
         for action in csvreader:
             if float(action[1]) != 0:
@@ -38,7 +38,7 @@ def calculation_optimized(actions, limit):
     opitmized_list = []
     for action in actions:
         sum += action.price
-
+        
         if sum <= limit:
             opitmized_list.append(action)
             total_benefit += action.benefit_net
