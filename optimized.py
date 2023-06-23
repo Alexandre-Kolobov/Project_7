@@ -24,21 +24,23 @@ def load_actions(data_path):
 
     with open(data_path, "r") as csvfile:
         csvreader = csv.reader(csvfile)
-        
+
         next(csvreader)  # Pour eviter l'entete
         for action in csvreader:
-            if float(action[1]) != 0:
+            if float(action[1]) > 0:
                 actions.append(Action(action[0], action[1], action[2]))
     return actions
 
 
 def calculation_optimized(actions, limit):
+    actions.sort(key=lambda a: a.rapport, reverse=True)
+
     sum = 0
     total_benefit = 0
     opitmized_list = []
     for action in actions:
         sum += action.price
-        
+
         if sum <= limit:
             opitmized_list.append(action)
             total_benefit += action.benefit_net
@@ -46,7 +48,9 @@ def calculation_optimized(actions, limit):
             sum -= action.price
 
     print("==================================================================")
-    print(f"Voici les actions à acheter: {opitmized_list} \n")
+    print("Voici les actions à acheter:")
+    for i in opitmized_list:
+        print(i)
     print(f"Somme investie: {sum}")
     print(f"Benefice: {total_benefit}")
     print(f"Temps d'execution: {time.time() - start_time}")  # renvoi le temps en s depuis epoch 1970 à 00:00:00
@@ -55,7 +59,6 @@ def calculation_optimized(actions, limit):
 
 def main():
     actions = load_actions(data_path)
-    actions.sort(key=lambda a: a.rapport, reverse=True)
     calculation_optimized(actions, 500)
 
 
